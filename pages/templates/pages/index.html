@@ -1,0 +1,32 @@
+{% extends 'pages/layout.html'%}
+{% block content %}
+
+{% if user.is_authenticated %}
+<p> You're logged in as: {{ user.username }}</p>
+{% endif %}
+
+<h2>Create a new note: </h2>
+<form method="POST">
+    {% csrf_token %}
+    <h3>Header for the note:</h3>
+    <input type="text" name="header"/>
+    <h3>Text field:</h3>
+    <input type="text" name="text"/>
+    <input type="submit" value="Add!"/>
+</form>
+
+<h1>Your notes:</h1>
+{% if user.is_authenticated %}
+    <ul>
+    {% if latest_note_list %}
+    {% for note in latest_note_list %}
+        <li><a href="/{{note.id}}/">{{ note.note_header }}</a></li>
+    {% endfor %}
+    {% else %}
+    <p>No notes yet.</p>
+    {% endif %}
+    </ul>
+{% else %}
+    <p>Log in to see notes</p>
+{% endif %}
+{% endblock %}

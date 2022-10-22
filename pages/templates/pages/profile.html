@@ -1,0 +1,18 @@
+{% extends 'pages/layout.html'%}
+{% block content %}
+
+<h1>Your personal information</h1>
+{% if address %}
+<h2>Username: {{ username }}</h2>
+<h2>Address: {{ address }}</h2>
+{% else %}
+<h2>No information added</h2>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <h3>Your address:</h3>
+    <input type="text" name="address"/>
+    <input type="submit" value="Add!"/>
+</form>
+{% endblock %}
