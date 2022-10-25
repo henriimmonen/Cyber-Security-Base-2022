@@ -58,6 +58,7 @@ def personal_info(request):
             profile = UserProfile.objects.create(username=username, address=address)
 
         context = {'username':request.user, 'address':profile.address}
+
     if request.method == 'GET':
         if profile is None:
             context = {'username':request.user, 'address':''}
