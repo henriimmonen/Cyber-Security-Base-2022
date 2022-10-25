@@ -9,7 +9,21 @@ After that you can add notes to yourself, which are seen in the index page in ch
 If you click on the note header, you’re taken to a page where you can see the details of that particular note.
 
 ### Flaw 1: Broken access control [A01:2021](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
-Users are able to see each others notes by typing note id's to urls.
+##### Problem: Users are able to see each others notes by typing note id's to urls.
+```note = get_object_or_404(Note, pk = note_id)```
+[Link](https://github.com/henriimmonen/Cyber-security-base-2022/blob/2fd2073f18eb6ee22026fbac538b94715a2a9d92/pages/views.py#L69)
+This problem is based on uncontrolled url-mapping. The app doesn't check whether the user has the right to view the requested note or not.
+
+###### Fix:
+Adding this block of code to one_note function provides checking of notes author and returns the note only if the author matches with request.user.
+```    try:
+        note = Note.objects.get(id = note_id)
+        if note.author == request.user:
+            return render(request, 'pages/text.html', {'note': note})
+        return redirect('/')
+    except Note.DoesNotExist:
+        return redirect('/')
+```
 
 ### Flaw 2: Cryptographic failures [A02:2021](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 ### Flaw 3: Injection [A03:2021](https://owasp.org/Top10/A03_2021-Injection/)
