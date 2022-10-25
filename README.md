@@ -10,14 +10,16 @@ If you click on the note header, you’re taken to a page where you can see the 
 
 ### Flaw 1: Broken access control [A01:2021](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 #### Problem: Users are able to see each others notes by typing note id's to urls.
+[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/2fd2073f18eb6ee22026fbac538b94715a2a9d92/pages/views.py#L69)
+
 ```
 note = get_object_or_404(Note, pk = note_id)
 ```
-[Link to function one_note](https://github.com/henriimmonen/Cyber-security-base-2022/blob/2fd2073f18eb6ee22026fbac538b94715a2a9d92/pages/views.py#L69)
 This problem is based on uncontrolled url-mapping. The app doesn't check whether the user has a right to view the requested note or not.
 
 ##### Fix:
-Adding this block of code to one_note function provides checking of notes author and returns the note only if the author matches with ```request.user```.
+Add this block of code to one_note function. It checks requested note's author and returns the note only if the author matches with ```request.user```.
+Otherwise it redirects to index page.
 ```
     try:
         note = Note.objects.get(id = note_id)
@@ -29,6 +31,7 @@ Adding this block of code to one_note function provides checking of notes author
 ```
 
 ### Flaw 2: Cryptographic failures [A02:2021](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
+
 ### Flaw 3: Injection [A03:2021](https://owasp.org/Top10/A03_2021-Injection/)
 ### Flaw 4: Security misconfiguration [A05:2021](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
 ### Flaw 5: 
