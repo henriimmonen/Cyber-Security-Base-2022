@@ -36,6 +36,7 @@ def one_note(request, note_id):
 ### Flaw 2: Cryptographic failures [A02:2021](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 #### Problem: Plain text data in database isn't encrypted.
 [Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/93fd981b8b33f276506d0cb1fca60cf25190493d/pages/models.py#L15)  
+
 In todays world, data safety and integrity get more attention through GDPR and other regulations. This is a welcome change and it affects how we use, store and handle data. Because of this every step that is possible to make, in order to cover sensitive data, should be taken.
 
 Noteapp has a model called UserProfile, which stores an address for the user. This model could hold other sensitive user information with a small modification. So in case of database theft or other similar attack directed towards the database, all address information would be in plain text for the attacker to use as they wish. Something should be done about this.
@@ -60,5 +61,38 @@ After this, the encryption is quite simple:
 This can be added to every field that you want to encrypt. This is enough for us at the moment.
 
 ### Flaw 3: Injection [A03:2021](https://owasp.org/Top10/A03_2021-Injection/)
+#### Problem: 
+#### Fix: 
+
 ### Flaw 4: Security misconfiguration [A05:2021](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
-### Flaw 5: 
+
+### Flaw 5: Security logging and monitoring failures [A09:2021](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
+#### Problem: Noteapp doesn't log any critical information that could be useful to detect and respond to breaches.
+Major advantage of security logging and monitoring is that it gives tools to respond to breaches. It also gives us documentation about possible attacks for forensics. This is very important in order to safely manage an app. On the other hand, you need to be aware what kind of information is logged and how it is stored, who has access to it and so on.  
+
+#### Fix:  
+This logging is a simple start, which gives us some type of information of possible attacks and suspicious activity. By setting logger level to 'WARNING' we get information describing minor problems and higher. Other way to go would have been to set it to 'DEBUG' or 'INFO' but as 'DEBUG' shows information about database queries etc. So we compromise between less logging and dealing with more sensitive data.
+
+Insert this to the end of settings.py file 
+```
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
+```
+#### Important
+If you can't get anything logged as the level is 'WARNING', change it to 'DEBUG' and you get more logging information. To view the logging information, you can print the text inside the file to terminal from the project root by typing ```cat debug.log```.
