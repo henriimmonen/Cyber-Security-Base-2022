@@ -71,7 +71,7 @@ This can be added to every field that you want to encrypt. This is enough for us
 Major advantage of security logging and monitoring is that it gives tools to respond to breaches. It also gives us documentation about possible attacks for forensics. This is very important in order to safely manage an app. On the other hand, you need to be aware what kind of information is logged and how it is stored, who has access to it and so on.  
 
 #### Fix:  
-This logging is a simple start, which gives us some type of information of possible attacks and suspicious activity. By setting logger level to 'WARNING' we get information describing minor problems and higher. Other way to go would have been to set it to 'DEBUG' or 'INFO' but as 'DEBUG' shows information about database queries etc. So we compromise between less logging and dealing with more sensitive data.
+This logging is a simple start, which gives us some type of information of possible attacks and suspicious activity. By setting logger level to 'WARNING' we get information describing minor problems and higher. Other way to go would have been to set it to 'DEBUG' or 'INFO' but as 'DEBUG' shows information about database queries etc so we compromise between less logging and dealing with more sensitive data.
 
 Insert this to the end of settings.py file 
 ```
