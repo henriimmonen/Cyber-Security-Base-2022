@@ -35,8 +35,8 @@ def one_note(request, note_id):
 
 ### Flaw 2: Cryptographic failures [A02:2021](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 #### Problem: Plain text data in database isn't encrypted.
-[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/93fd981b8b33f276506d0cb1fca60cf25190493d/pages/models.py#L15)
-In todays world data safety and integrity gets more attention through GDPR and other regulations. This is a welcome change and it affects how we use, store and handle data. Because of this, every step that is possible in order to cover sensitive data, should be taken.
+[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/93fd981b8b33f276506d0cb1fca60cf25190493d/pages/models.py#L15)  
+In todays world, data safety and integrity get more attention through GDPR and other regulations. This is a welcome change and it affects how we use, store and handle data. Because of this every step that is possible to make, in order to cover sensitive data, should be taken.
 
 Noteapp has a model called UserProfile, which stores an address for the user. This model could hold other sensitive user information with a small modification. So in case of database theft or other similar attack directed towards the database, all address information would be in plain text for the attacker to use as they wish. Something should be done about this.
 
