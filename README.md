@@ -10,12 +10,15 @@ If you click on the note header, you’re taken to a page where you can see the 
 
 ### Flaw 1: Broken access control [A01:2021](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 #### Problem: Users are able to see each others notes by typing note id's to urls.
-[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/2fd2073f18eb6ee22026fbac538b94715a2a9d92/pages/views.py#L69)
+[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/394702848a32385ff6c9a670ada751feb6d99fd9/pages/views.py#L71)
 
 ```
 def one_note(request, note_id):
-    note = get_object_or_404(Note, pk = note_id)
-    return render(request, 'pages/text.html', {'note': note})
+    try:
+        note = Note.objects.get(pk = note_id)
+        return render(request, 'pages/text.html', {'note': note})
+    except Note.DoesNotExist:
+        return redirect('/')
 ```
 This problem is based on uncontrolled url-mapping. The app doesn't check whether the user has a right to view the requested note or not.
 
