@@ -69,6 +69,8 @@ def personal_info(request):
 
 @login_required # view note based on id
 def one_note(request, note_id):
-    note = get_object_or_404(Note, pk = note_id)
-    return render(request, 'pages/text.html', {'note': note})
-
+    try:
+        note = Note.objects.get(pk = note_id)
+        return render(request, 'pages/text.html', {'note': note})
+    except Note.DoesNotExist:
+        return redirect('/')
