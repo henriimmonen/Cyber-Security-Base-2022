@@ -10,12 +10,15 @@ If you click on the note header, you’re taken to a page where you can see the 
 
 ### Flaw 1: Broken access control [A01:2021](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 #### Problem: Users are able to see each others notes by typing note id's to urls.
-[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/2fd2073f18eb6ee22026fbac538b94715a2a9d92/pages/views.py#L69)
+[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/394702848a32385ff6c9a670ada751feb6d99fd9/pages/views.py#L71)
 
 ```
 def one_note(request, note_id):
-    note = get_object_or_404(Note, pk = note_id)
-    return render(request, 'pages/text.html', {'note': note})
+    try:
+        note = Note.objects.get(pk = note_id)
+        return render(request, 'pages/text.html', {'note': note})
+    except Note.DoesNotExist:
+        return redirect('/')
 ```
 This problem is based on uncontrolled url-mapping. The app doesn't check whether the user has a right to view the requested note or not.
 
@@ -64,7 +67,10 @@ This can be added to every field that you want to encrypt. This is enough for us
 #### Problem: 
 #### Fix: 
 
-### Flaw 4: Security misconfiguration [A05:2021](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
+### Flaw 4: Identification and authentication failures [A07:2021](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
+#### Problem: Noteapp admin is run on generic username/password combination that is easy to predict.
+#### Fix: 
+This problem is quite easy to fix. Administrator password provided in the database is admin123 (username is admin). By changing this, the security of the app is instantly better. Admin passwords are sought after by cyber criminals and by simple and fast password change you make their job more difficult. It is considered a good practice to change administrator and admin passwords from time to time and not use the same password on multiple accounts/servers/etc. [Why administrators should change passwords from time to time](https://blog.netwrix.com/2014/06/17/why-you-need-to-ensure-administrators-change-passwords-regularly/).
 
 ### Flaw 5: Security logging and monitoring failures [A09:2021](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
 #### Problem: Noteapp doesn't log any critical information that could be useful to detect and respond to breaches.
