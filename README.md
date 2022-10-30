@@ -64,8 +64,13 @@ After this, the encryption is quite simple:
 This can be added to every field that you want to encrypt. This is enough for us at the moment.
 
 ### Flaw 3: Injection [A03:2021](https://owasp.org/Top10/A03_2021-Injection/)
-#### Problem: 
+#### Problem: Noteapp accepts unsanitized user input without HTML escaping.  
+[Link to the problem](https://github.com/henriimmonen/Cyber-security-base-2022/blob/1aed5f3f6b4320e2ede6d6e462b5a699d0778e4b/pages/templates/pages/profile.html#L7)  
+Django uses automatic HTML escaping as a security feature. You can avoid using this by marking certain inputs as safe in the HTML template ```<h2>Address: {{ address | safe }}</h2>```  
+This allows potential cross site scripting attacks, for example if one would enter ```<script>alert(document.cookie);</script> you would be able to see the cookie used. This itself is not a very harmful attack, but it could be developed further.  
+
 #### Fix: 
+By not marking user input as safe we can avoid some of the problems. In this case the address is not used in anything other than showing it to the user so it's simple. Instead of marking the input as safe, we write ```<h2>Address: {{ address }}</h2>```.
 
 ### Flaw 4: Identification and authentication failures [A07:2021](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 #### Problem: Noteapp admin is run on generic username/password combination that is easy to predict.
