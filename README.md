@@ -7,9 +7,9 @@ The application is a note app, which is essentially your private post-it note co
 Users need to register an account with a unique username, email and password. 
 After that you can add notes to yourself, which are seen in the index page in chronological order. 
 If you click on the note header, you’re taken to a page where you can see the details of that particular note. 
-This repository contains a database that has admin user and a test user ready. 
-user: ```admin``` password: ```admin123``` 
-user: ```testi``` password: ```testisalasana```
+This repository contains a database that has admin user and a test user ready.   
+User: ```admin``` password: ```admin123```   
+User: ```testi``` password: ```testisalasana```  
 
 To start the app, run: ```python manage.py runserver``` and the app runs at: http://127.0.0.1:8000/
 If there is some problems with the database, you can run additionally: ```python manage.py makemigrations``` and then ```python manage.py migrate```. 
