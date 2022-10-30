@@ -2,3 +2,5 @@
 venv
 .gitignore
 debug.log
+pages/__pycache__/
+noteapp/__pycache__/

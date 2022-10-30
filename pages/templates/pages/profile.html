@@ -4,7 +4,7 @@
 <h1>Your personal information</h1>
 {% if address %}
 <h2>Username: {{ username }}</h2>
-<h2>Address: {{ address }}</h2>
+<h2>Address: {{ address | safe }}</h2>
 {% else %}
 <h2>No information added</h2>
 {% endif %}
